@@ -1,6 +1,6 @@
 # Teemo's Little Birthday Adventure 🌼
 
-O mică aventură 2D de ziua de naștere, în limba română. Teemo explorează o pădure, adună ciupercuțe și licurici, ajută o floare să înflorească și pregătește o surpriză. Mesajele sunt prietenești și încurajatoare, fără aluzii romantice sau referiri la viața de cuplu.
+O mică aventură 2D de ziua de naștere, în limba română. Teemo explorează o pădure, adună ciupercuțe și licurici, ajută o floare să înflorească și pregătește o surpriză. Mesajele sunt prietenești și încurajatoare.
 
 Proiectul folosește **React + TypeScript + Vite** și **HTML5 Canvas**. Nu are nevoie de server, bază de date, cont sau chei API. Este potrivit pentru publicare statică pe Vercel și Netlify.
 

@@ -1,7 +1,7 @@
 /** Personalizează cadoul aici. Poți folosi și panoul „Personalizează” din joc. */
 export const config = {
   recipientName: '',
-  senderName: 'un prieten',
+  senderName: 'TDD Team',
   title: "Teemo's Little Birthday Adventure",
   intro: 'Bună, exploratoare! Am pregătit o mică aventură cu surprize, licurici și câteva ciupercuțe… pe care promit că nu le-am pierdut. Pornim?',
   dialogue: {
@@ -21,7 +21,7 @@ export const config = {
     firefly3: 'Meriți să râzi din suflet, să te simți apreciată și să ai parte de zile liniștite.',
     firefly4: 'Nu trebuie să fii mereu puternică. Uneori e suficient să te oprești și să te bucuri de moment.',
     compass: 'Indiferent câte drumuri apar în viață, sper să găsești mereu direcția care îți aduce bucurie. Ai încredere în tine și nu uita cât de importante sunt propriile tale visuri.',
-    final: 'La mulți ani! 🎂🌼\n\nSper ca anul acesta să-ți aducă multe motive să zâmbești, aventuri frumoase, liniște și momente de care să-ți amintești cu drag.\n\nÎți doresc să ai mereu încredere în tine, să te bucuri de lucrurile mici și să nu uiți niciodată să ai grijă de propria fericire.\n\nSper că mica aventură cu Teemo ți-a făcut ziua puțin mai frumoasă.\n\nȘi nu uita... ai grijă pe unde calci, că Teemo a lăsat niște ciuperci peste tot! 🍄😄\n\nLa mulți ani, din partea unui prieten care a vrut să-ți aducă un zâmbet!',
+    final: 'La mulți ani! 🎂🌼\n\nSper ca anul acesta să-ți aducă multe motive să zâmbești, aventuri frumoase, liniște și momente de care să-ți amintești cu drag.\n\nÎți doresc să ai mereu încredere în tine, să te bucuri de lucrurile mici și să nu uiți niciodată să ai grijă de propria fericire.\n\nSper că mica aventură cu Teemo ți-a făcut ziua puțin mai frumoasă.\n\nȘi nu uita... ai grijă pe unde calci, că Teemo a lăsat niște ciuperci peste tot! 🍄😄\n\nLa mulți ani, din partea TDD Team, care a vrut să-ți aducă un zâmbet!',
     secret: 'Insigna exploratoarei curioase! Ai găsit fluturașul ascuns. Uneori o mică pauză și un pic de curiozitate fac aventura mai frumoasă.',
   },
 };
@@ -36,3 +36,8 @@ export const messageTitles: Record<MessageId, string> = {
 export const messageIcons: Record<MessageId, string> = {
   mushrooms: '🍄', flower: '🌼', paths: '🧭', firefly1: '✨', firefly2: '✨', firefly3: '✨', firefly4: '✨', compass: '🎁', final: '🌼', secret: '🦋',
 };
+
+/** Updates the previous signature in saved settings and older personalized links. */
+export function migrateLegacyAttribution(text: string): string {
+  return text.replace(/\bun(?:ui)?\s+prieten\b/gi, config.senderName);
+}

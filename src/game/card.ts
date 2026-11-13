@@ -1,4 +1,5 @@
 import { drawTeemo } from './art';
+import { config, migrateLegacyAttribution } from '../config';
 
 const WIDTH = 1400;
 const HEIGHT = 1800;
@@ -192,7 +193,7 @@ export function renderBirthdayCard(canvas: HTMLCanvasElement, recipientName: str
   ctx.fillStyle = '#8c967e';
   ctx.font = '24px Arial, Helvetica, sans-serif';
   ctx.fillText('Cu gânduri bune,', 700, 1500);
-  const sender = normalizeName(senderName) || 'un prieten';
+  const sender = normalizeName(migrateLegacyAttribution(senderName)) || config.senderName;
   const { lines: signature, size: signatureSize } = nameLines(ctx, sender, 42, 920);
   ctx.fillStyle = '#637655';
   signature.forEach((line, i) => ctx.fillText(line, 700, 1563 + i * (signatureSize + 7)));

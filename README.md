@@ -69,7 +69,7 @@ Pentru a modifica valorile implicite din surse, fișierele importante sunt:
 
 Pentru schimbări de poziție, lumea Canvas folosește coordonate logice de **1000 × 640**. Ține obiectele departe de margini, astfel încât să poată fi atinse ușor și pe telefon.
 
-Dacă personalizezi mesajele, păstrează tonul firesc al unui cadou din partea unui prieten. Nu este nevoie să adaugi referiri la dificultățile personale ale destinatarei.
+Dacă personalizezi mesajele, păstrează tonul firesc al unui cadou din partea TDD Team. Nu este nevoie să adaugi referiri la dificultățile personale ale destinatarei.
 
 ## Salvarea progresului
 

@@ -1,4 +1,4 @@
-import { config, type MessageId, type Personalization } from '../config';
+import { config, migrateLegacyAttribution, type MessageId, type Personalization } from '../config';
 import { itemsForStage } from './missions';
 
 export type Progress = {
@@ -71,6 +71,6 @@ export function readSettings(): Settings {
   try {
     const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || 'null');
     if (!s || typeof s !== 'object') return defaults;
-    return { ...defaults, recipientName: typeof s.recipientName === 'string' ? s.recipientName.slice(0, 40) : defaults.recipientName, senderName: typeof s.senderName === 'string' ? s.senderName.slice(0, 40) : defaults.senderName, sound: s.sound === true, voice: s.voice === true, messages: Object.fromEntries(Object.entries(defaults.messages).map(([id, text]) => [id, typeof s.messages?.[id] === 'string' && s.messages[id].trim() ? s.messages[id].slice(0, 5000) : text])) as Record<MessageId, string> };
+    return { ...defaults, recipientName: typeof s.recipientName === 'string' ? s.recipientName.slice(0, 40) : defaults.recipientName, senderName: typeof s.senderName === 'string' ? migrateLegacyAttribution(s.senderName.slice(0, 40)).trim() || defaults.senderName : defaults.senderName, sound: s.sound === true, voice: s.voice === true, messages: Object.fromEntries(Object.entries(defaults.messages).map(([id, text]) => [id, typeof s.messages?.[id] === 'string' && s.messages[id].trim() ? migrateLegacyAttribution(s.messages[id].slice(0, 5000)) : text])) as Record<MessageId, string> };
   } catch { return defaults; }
 }

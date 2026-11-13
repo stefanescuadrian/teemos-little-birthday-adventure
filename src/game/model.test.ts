@@ -4,13 +4,15 @@ import {
   gameReducer,
   initialProgress,
   readProgress,
+  readSettings,
+  SETTINGS_KEY,
   stageReady,
   STORAGE_KEY,
   validateProgress,
   type Progress,
 } from './model';
 import { itemsForStage } from './missions';
-import { config } from '../config';
+import { config, migrateLegacyAttribution } from '../config';
 
 function collectStage(state: Progress): Progress {
   return itemsForStage(state.stage).reduce((progress, item) =>
@@ -189,4 +191,36 @@ test('progress loading tolerates unavailable storage and invalid JSON', () => {
     if (originalDescriptor) Object.defineProperty(globalThis, 'localStorage', originalDescriptor);
     else Reflect.deleteProperty(globalThis, 'localStorage');
   }
+});
+
+
+test('previous attribution is migrated in saved settings without changing other preferences', () => {
+  const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+  Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: { getItem(key: string) {
+    assert.equal(key, SETTINGS_KEY);
+    return JSON.stringify({ recipientName: 'BTY', senderName: 'un prieten', sound: true, voice: false, messages: {
+      final: 'La mulți ani, din partea unui prieten!',
+      firefly1: 'Un mesaj personalizat, păstrat exact.',
+    } });
+  } } });
+  try {
+    const restored = readSettings();
+    assert.equal(restored.senderName, 'TDD Team');
+    assert.equal(restored.recipientName, 'BTY');
+    assert.equal(restored.sound, true);
+    assert.equal(restored.voice, false);
+    assert.equal(restored.messages.final, 'La mulți ani, din partea TDD Team!');
+    assert.equal(restored.messages.firefly1, 'Un mesaj personalizat, păstrat exact.');
+  } finally {
+    if (descriptor) Object.defineProperty(globalThis, 'localStorage', descriptor);
+    else Reflect.deleteProperty(globalThis, 'localStorage');
+  }
+});
+
+test('attribution migration handles old links and preserves other custom names', () => {
+  assert.equal(migrateLegacyAttribution('un prieten'), 'TDD Team');
+  assert.equal(migrateLegacyAttribution('Din partea unui prieten'), 'Din partea TDD Team');
+  assert.equal(migrateLegacyAttribution('UN PRIETEN'), 'TDD Team');
+  assert.equal(migrateLegacyAttribution('Echipa de exploratori'), 'Echipa de exploratori');
+  assert.equal(migrateLegacyAttribution('TDD Team'), 'TDD Team');
 });
